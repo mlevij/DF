@@ -8,7 +8,6 @@ grace_animation/
 *.tif
 
 # Generated frame assets — add explicitly once a given product is ready to publish
-assets/grace/
 assets/grace_colorado/
 
 # IDE / notebook artifacts
