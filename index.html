@@ -90,27 +90,14 @@
       background: var(--card-bg);
     }
 
-    .gif-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    @media (max-width: 640px) {
-      .gif-grid { grid-template-columns: 1fr; }
-    }
-
-    .gif-item img {
+    /* Leaflet-based monitors (drought, Sentinel) need more height so the
+       map's own slider/legend controls don't crowd out the map area and
+       cut off the visible boundaries. */
+    .map-embed-tall {
       width: 100%;
+      height: 1100px;
       border: 1px solid var(--rule);
-      display: block;
-    }
-
-    .gif-item p {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 0.5rem;
+      background: var(--card-bg);
     }
 
     .chart-stack {
@@ -241,7 +228,7 @@
       <p class="section-label">USDM</p>
       <h2 class="section-title">Drought Monitor</h2>
       <p class="section-body">Peak-summer (August) drought classification, year by year, 2000–present.</p>
-      <iframe class="map-embed" src="drought-monitor.html" title="USDM Drought Monitor"></iframe>
+      <iframe class="map-embed-tall" src="drought-monitor.html" title="USDM Drought Monitor"></iframe>
     </section>
 
     <!-- ── GRACE CONUS ── -->
@@ -265,44 +252,7 @@
       <p class="section-label">Sentinel-1</p>
       <h2 class="section-title">Vegetation/Soil Signal</h2>
       <p class="section-body">Monthly radar-derived vegetation density proxy, clipped to SW Colorado's 9 counties.</p>
-      <iframe class="map-embed" src="sentinel-ratio-monitor.html" title="Sentinel-1 Vegetation/Soil Signal Monitor"></iframe>
-    </section>
-
-    <!-- ── Landscape Change GIFs ── -->
-    <section class="story-section">
-      <p class="section-label">Landscape Change</p>
-      <h2 class="section-title">Seeing Change from Space</h2>
-      <p class="section-body">
-        Annual peak-season satellite imagery reveals how the landscape has responded
-        to drought cycles over four decades. False color and natural color composites
-        are shown side by side — false color uses SWIR/NIR/Red to emphasize vegetation
-        health and moisture stress, while natural color provides a familiar reference view.
-        Below, a higher-resolution Sentinel-2 closeup shows Grand Valley in detail.
-      </p>
-
-      <div class="gif-grid">
-        <div class="gif-item">
-          <img src="assets/landsat_swco_timeseries.gif"
-               alt="Landsat false color time series — SW Colorado 1984–present">
-          <p>False color (SWIR/NIR/Red) — highlights vegetation health and moisture stress.
-             Green indicates healthy vegetation; brown indicates stress or bare soil.</p>
-        </div>
-        <div class="gif-item">
-          <img src="assets/landsat_swco_naturalcolor.gif"
-               alt="Landsat natural color time series — SW Colorado 1984–present">
-          <p>Natural color (Red/Green/Blue) — true-color view of the same region and time period
-             for comparison.</p>
-        </div>
-      </div>
-
-      <div class="gif-grid" style="grid-template-columns: 1fr 1fr; margin-top: 1.5rem; justify-items: center;">
-        <div class="gif-item" style="grid-column: 1 / -1; max-width: 50%;">
-          <img src="assets/grandvalley_sentinel2.gif"
-               alt="Sentinel-2 false color time series — Grand Valley 2017–present">
-          <p>Grand Valley closeup — Sentinel-2 at 10m resolution, 2017–present.
-             Shows irrigation patterns and crop-level moisture stress.</p>
-        </div>
-      </div>
+      <iframe class="map-embed-tall" src="sentinel-ratio-monitor.html" title="Sentinel-1 Vegetation/Soil Signal Monitor"></iframe>
     </section>
 
     <!-- ── Drought Trends ── -->
