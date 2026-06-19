@@ -6,6 +6,7 @@ gee/palsar_co/
 gee/palsar_sw_co/
 grace_animation/
 *.tif
+*.zip
 
 # Generated frame assets — add explicitly once a given product is ready to publish
 assets/grace_colorado/
