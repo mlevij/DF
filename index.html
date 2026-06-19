@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discovery Farms Drought Story Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f5f2ec;
+      --ink:       #1a1814;
+      --muted:     #7a7468;
+      --accent:    #c85a2a;
+      --rule:      #d4cfc5;
+      --card-bg:   #fff;
+      --serif:     'DM Serif Display', Georgia, serif;
+      --sans:      'DM Sans', system-ui, sans-serif;
+      --mono:      'DM Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    header {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .back-link {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 2rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--accent); }
+    .back-link::before { content: '←'; }
+
+    .eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em { font-style: italic; color: var(--accent); }
+
+    .intro {
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.85;
+    }
+
+    .map-embed {
+      width: 100%;
+      height: 600px;
+      border: 1px solid var(--rule);
+      background: var(--card-bg);
+    }
+
+    .gif-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 640px) {
+      .gif-grid { grid-template-columns: 1fr; }
+    }
+
+    .gif-item img {
+      width: 100%;
+      border: 1px solid var(--rule);
+      display: block;
+    }
+
+    .gif-item p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .chart-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .chart-item img {
+      width: 100%;
+      border: 1px solid var(--rule);
+      display: block;
+      background: #fff;
+    }
+
+    .chart-item p {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .story-section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: var(--sans);
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-body {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .methods-box {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--accent);
+      padding: 1.5rem 2rem;
+      margin-top: 2rem;
+    }
+
+    .methods-box h3 {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0.75rem;
+    }
+
+    .methods-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .methods-box li {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      padding: 0.2rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .methods-box li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    footer {
+      padding: 2.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <a class="back-link" href="/">Home</a>
+      <p class="eyebrow">Discovery Farms · SW Colorado</p>
+      <h1>Drought Conditions<br><em>& Landscape Change</em></h1>
+      <p class="intro">
+        An exploration of drought severity, vegetation response, and water availability
+        across SW Colorado's agricultural watersheds — from 1984 to present.
+        Produced in collaboration with Discovery Farms, an agricultural research
+        organization with sites in Grand Valley and SW Colorado.
+      </p>
+    </header>
+
+    <!-- ── USDM Drought Monitor ── -->
+    <section class="story-section">
+      <p class="section-label">USDM</p>
+      <h2 class="section-title">Drought Monitor</h2>
+      <p class="section-body">Peak-summer (August) drought classification, year by year, 2000–present.</p>
+      <iframe class="map-embed" src="drought-monitor.html" title="USDM Drought Monitor"></iframe>
+    </section>
+
+    <!-- ── GRACE CONUS ── -->
+    <section class="story-section">
+      <p class="section-label">GRACE — CONUS</p>
+      <h2 class="section-title">GRACE Drought Indicator</h2>
+      <p class="section-body">Weekly soil moisture / groundwater storage percentile, full continental US, 2018–2025.</p>
+      <iframe class="map-embed" src="grace-monitor.html" title="GRACE CONUS Monitor"></iframe>
+    </section>
+
+    <!-- ── GRACE Colorado River Basin ── -->
+    <section class="story-section">
+      <p class="section-label">GRACE — Basin</p>
+      <h2 class="section-title">Colorado River Basin Monitor</h2>
+      <p class="section-body">Same GRACE data, zoomed and clipped to the Colorado River Basin watershed.</p>
+      <iframe class="map-embed" src="grace-basin-monitor.html" title="GRACE Colorado River Basin Monitor"></iframe>
+    </section>
+
+    <!-- ── Sentinel-1 ── -->
+    <section class="story-section">
+      <p class="section-label">Sentinel-1</p>
+      <h2 class="section-title">Vegetation/Soil Signal</h2>
+      <p class="section-body">Monthly radar-derived vegetation density proxy, clipped to SW Colorado's 9 counties.</p>
+      <iframe class="map-embed" src="sentinel-ratio-monitor.html" title="Sentinel-1 Vegetation/Soil Signal Monitor"></iframe>
+    </section>
+
+    <!-- ── Landscape Change GIFs ── -->
+    <section class="story-section">
+      <p class="section-label">Landscape Change</p>
+      <h2 class="section-title">Seeing Change from Space</h2>
+      <p class="section-body">
+        Annual peak-season satellite imagery reveals how the landscape has responded
+        to drought cycles over four decades. False color and natural color composites
+        are shown side by side — false color uses SWIR/NIR/Red to emphasize vegetation
+        health and moisture stress, while natural color provides a familiar reference view.
+        Below, a higher-resolution Sentinel-2 closeup shows Grand Valley in detail.
+      </p>
+
+      <div class="gif-grid">
+        <div class="gif-item">
+          <img src="assets/landsat_swco_timeseries.gif"
+               alt="Landsat false color time series — SW Colorado 1984–present">
+          <p>False color (SWIR/NIR/Red) — highlights vegetation health and moisture stress.
+             Green indicates healthy vegetation; brown indicates stress or bare soil.</p>
+        </div>
+        <div class="gif-item">
+          <img src="assets/landsat_swco_naturalcolor.gif"
+               alt="Landsat natural color time series — SW Colorado 1984–present">
+          <p>Natural color (Red/Green/Blue) — true-color view of the same region and time period
+             for comparison.</p>
+        </div>
+      </div>
+
+      <div class="gif-grid" style="grid-template-columns: 1fr 1fr; margin-top: 1.5rem; justify-items: center;">
+        <div class="gif-item" style="grid-column: 1 / -1; max-width: 50%;">
+          <img src="assets/grandvalley_sentinel2.gif"
+               alt="Sentinel-2 false color time series — Grand Valley 2017–present">
+          <p>Grand Valley closeup — Sentinel-2 at 10m resolution, 2017–present.
+             Shows irrigation patterns and crop-level moisture stress.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Drought Trends ── -->
+    <section class="story-section">
+      <p class="section-label">Drought Trends</p>
+      <h2 class="section-title">How Has Drought Changed Over Time?</h2>
+      <p class="section-body">
+        Two complementary views of drought history across the SW Colorado region —
+        a long-term moisture index spanning nearly seven decades, and a modern
+        record of severe drought frequency since 2000.
+      </p>
+
+      <div class="chart-stack">
+        <div class="chart-item">
+          <img src="assets/pdsi_timeseries_swco.png"
+               alt="Annual Mean PDSI — SW Colorado 1958–present">
+          <p>Palmer Drought Severity Index (PDSI) — annual mean across SW Colorado, 1958–present.
+             Negative values indicate drier than average conditions.</p>
+        </div>
+        <div class="chart-item">
+          <img src="assets/usdm_drought_frequency.png"
+               alt="Severe Drought Extent — SW Colorado 2000–present">
+          <p>Percentage of SW Colorado in D2 (Severe) or worse drought each August, 2000–present.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Methods ── -->
+    <section class="story-section">
+      <p class="section-label">Methods</p>
+      <h2 class="section-title">Data &amp; Approach</h2>
+      <p class="section-body">
+        All analysis was conducted using Google Earth Engine and Python.
+        Data sources and methods are summarized below.
+      </p>
+
+      <div class="methods-box">
+        <h3>Data Sources &amp; Methods</h3>
+        <ul>
+          <li>USDM drought maps — weekly classifications, D0–D4, 2000–present (NDMC/NOAA/USDA)</li>
+          <li>TerraClimate PDSI — monthly Palmer Drought Severity Index, 1958–present (~4km)</li>
+          <li>Landsat 5/7/8/9 — harmonized false color and natural color composites, June–October, 1984–present (30m)</li>
+          <li>Sentinel-2 SR — false color composites, July–August, 2017–present (10m)</li>
+          <li>GRACE Data Assimilation — weekly soil moisture / groundwater percentile, 2018–present (~14km)</li>
+          <li>Sentinel-1 SAR — VH/VV ratio, monthly composites, 2018–present (250m)</li>
+          <li>Region: Delta, Dolores, Gunnison, La Plata, Mesa, Montezuma, Montrose, Ouray, San Miguel Counties</li>
+          <li>Cloud masking via per-pixel QA band; gap fill using 25th percentile fallback</li>
+          <li>Trend lines computed via ordinary least squares linear regression</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <p>Discovery Farms · Colorado State University · 2026</p>
+      <p><a href="/">← Back to mlevij.com</a></p>
+    </footer>
+
+  </div>
+</body>
+</html>
